@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, } from 'vue';
+import { ref, VNodeRef } from 'vue';
 
 
 interface NavItemProps {
@@ -21,17 +21,45 @@ const { isDefaultOpen, submenu, to, label } = withDefaults(defineProps<Props>(),
 
 const isOpenRef = ref<boolean>(isDefaultOpen);
 const hasChildren = ref<boolean>(!!submenu?.length);
+const chevronButtonRef = ref<HTMLButtonElement>();
+
+const ariaLabel = `Toggle ${label} submenu`;
+
+const manageKeyboardAccessOnItem = (event: KeyboardEvent) => {
+    // Leave submenu when pressing escape
+    if (event.key === 'Escape') {
+        isOpenRef.value = false;
+
+        chevronButtonRef.value?.focus();
+        return;
+    }
+
+    if (event.key === 'Tab') {
+        // Leave submenu at the last link
+        // todo
+
+        // Leave submenu at the first link
+        // todo
+    }
+}
 
 </script>
 
 <template>
-    <li class="relative inline-flex items-center">
+    <li
+        class="inline-flex items-center relative"
+        :aria-expanded="isOpenRef"
+        @mouseover="isOpenRef = true"
+        @mouseleave="isOpenRef = false"
+        @keydown="manageKeyboardAccessOnItem"
+    >
         <a
             :href="to"
             class="py-2 no-underline hover:underline"
             :class="{
                 'px-3.5': !hasChildren,
                 'pl-3.5 pr-2': hasChildren,
+
 
             }"
         >
@@ -40,8 +68,10 @@ const hasChildren = ref<boolean>(!!submenu?.length);
 
         <template v-if="hasChildren">
             <button
-                aria-label="Toggle {{ label }} submenu"
+                :aria-label="ariaLabel"
                 :aria-expanded="isOpenRef"
+                @click="isOpenRef = !isOpenRef"
+                ref="chevronButtonRef"
             >
                 <svg
                     class="h-5 w-5 "
@@ -63,16 +93,20 @@ const hasChildren = ref<boolean>(!!submenu?.length);
 
             <ul
                 :aria-hidden="!isOpenRef"
-                class="absolute list-none aria-[hidden]:hidden"
+                class="absolute list-none aria-[hidden='true']:hidden top-full left-0 shadow-lg bg-white rounded-lg"
             >
                 <li
                     v-for="item in submenu"
                     :key="item.label"
+                    class="w-36"
                 >
-                    <a :href="item.to">{{ item.label }} <span class="sr-only"> {{ label }}</span>
+                    <a
+                        :href="item.to ?? '#'"
+                        class="no-underline hover:underline px-3.5 py-2 inline-block w-full"
+                    >
+                        {{ item.label }} <span class="sr-only"> {{ label }}</span>
                     </a>
                 </li>
-
             </ul>
 
         </template>

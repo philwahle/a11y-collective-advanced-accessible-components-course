@@ -3,9 +3,14 @@ import LinkWrapper from './../components/LinkWrapper.vue';
 import NavigationMenuTopItem from '../components/NavigationMenuTopItem.vue';
 
 const westernSubmenuItems = [
-    { label: "Western" },
-    { label: "Crime" },
-    { label: "Classic" },
+    { label: "Western", href: '#' },
+    { label: "Crime", href: '#' },
+    { label: "Classic", href: '#' },
+]
+
+const contactSubmenuItems = [
+    { label: "FAQ", href: '#' },
+    { label: "Your Account", href: '#' },
 ]
 </script>
 
@@ -21,10 +26,13 @@ const westernSubmenuItems = [
             <ul class="list-none space-x-2 inline-flex items-center">
                 <NavigationMenuTopItem label="Home"></NavigationMenuTopItem>
                 <NavigationMenuTopItem
-                    label="Western"
+                    label="Posters"
                     :submenu="westernSubmenuItems"
                 ></NavigationMenuTopItem>
-                <NavigationMenuTopItem label="Contact"></NavigationMenuTopItem>
+                <NavigationMenuTopItem
+                    label="Contact"
+                    :submenu="contactSubmenuItems"
+                ></NavigationMenuTopItem>
 
                 <li class="flex items-center">
                     <a
