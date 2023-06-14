@@ -1,1 +1,1 @@
-# Advanced Accessible Compontes Course form the A11y Collective 
+# Advanced Accessible Compontes Course from the A11y Collective 
