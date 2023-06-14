@@ -52,11 +52,11 @@ import LinkWrapper from './../components/LinkWrapper.vue';
                 aliquam harum cum! Itaque, ex! Nam, culpa.
             </p>
 
-            <footer id="footer">
-                <link-wrapper />
-            </footer>
-
         </main>
+
+        <footer id="footer">
+            <link-wrapper />
+        </footer>
 
     </div>
 </template>
