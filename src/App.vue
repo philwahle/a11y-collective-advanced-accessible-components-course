@@ -1,11 +1,7 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <div>
+  <div class="container mx-auto mt-12">
     <router-view></router-view>
   </div>
 </template>
-
-<style scoped></style>
