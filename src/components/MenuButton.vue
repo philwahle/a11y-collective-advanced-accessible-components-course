@@ -2,6 +2,8 @@
 import { ref } from 'vue';
 
 const isOpenRef = ref<boolean>(false);
+const menuButtonRef = ref<HTMLButtonElement>();
+
 
 const emit = defineEmits<{
     (e: 'update:isOpen', value: boolean): void
@@ -12,15 +14,29 @@ function toggleMenu() {
     emit('update:isOpen', isOpenRef.value);
 }
 
+function closeMenu() {
+    isOpenRef.value = false;
+}
+
+defineExpose({
+    menuButtonRef,
+    closeMenu
+});
+
 </script>
 
 <template>
     <button
+        ref="menuButtonRef"
         type="button"
         @click="toggleMenu"
         :aria-expanded="isOpenRef"
         :aria-label="isOpenRef ? 'Close menu' : 'Open menu'"
-        class="flex place-items-center rounded-md bg-gray-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200"
+        class="flex place-items-center rounded-md bg-gray-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
+        :class="{
+            'focus-visible:outline-gray-200': !isOpenRef,
+            'focus-visible:outline-purple-500': isOpenRef
+        }"
     >
 
         <!-- Menu icon -->

@@ -4,7 +4,7 @@ import MenuButton from '../components/MenuButton.vue';
 import { ref } from 'vue';
 
 const isMenuOpen = ref<boolean>(false);
-const menuButtonRef = ref<HTMLButtonElement>();
+const menuButtonRef = ref<any>();
 
 interface MenuProps {
     label: string
@@ -23,6 +23,59 @@ const menu: MenuProps[] = [
     }
 ];
 
+const listItemRef = ref<HTMLUListElement[]>([]);
+
+
+const index = ref(0)
+
+const manageKeyboardAccessOnItem = (event: KeyboardEvent) => {
+
+
+    if (!isMenuOpen.value) {
+        return;
+    }
+
+    if (event.key === 'Escape') {
+        menuButtonRef.value.closeMenu();
+        isMenuOpen.value = false;
+        menuButtonRef.value.$el.focus();
+        return;
+    }
+
+    //const focusable = 'button, a:not(.skiplink), input, select, textarea, [tabindex]:not([tabindex="-1"])'
+
+    if (event.key !== 'Tab') {
+        return;
+    }
+
+    event.preventDefault();
+
+    const focusableElements: (HTMLButtonElement | HTMLAnchorElement)[] = [
+        menuButtonRef.value.$el as HTMLButtonElement,
+        ...listItemRef.value.map((item) => item.querySelector('a') as HTMLAnchorElement)
+    ];
+
+
+    if (!event.shiftKey) {
+        index.value++;
+
+        if (index.value > focusableElements.length - 1) {
+            index.value = 0;
+        }
+    }
+
+    if (event.shiftKey) {
+        index.value--;
+
+        if (index.value < 0) {
+            index.value = focusableElements.length - 1;
+        }
+    }
+
+    focusableElements[index.value].focus();
+
+}
+
 </script>
 
 <template>
@@ -38,7 +91,10 @@ const menu: MenuProps[] = [
                 'overflow-hidden': isMenuOpen,
             }"
         >
-            <header class="bg-gray-800 p-6 flex justify-between">
+            <header
+                class="bg-gray-800 p-6 flex justify-between"
+                @keydown="manageKeyboardAccessOnItem"
+            >
                 <menu-button
                     @update:is-open="(e: boolean) => isMenuOpen = e"
                     class="z-50"
@@ -51,14 +107,18 @@ const menu: MenuProps[] = [
                     Button
                 </button>
 
+                <button
+                    class="block rounded-md bg-gray-500 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-200"
+                >
+                    Button
+                </button>
 
                 <nav
                     aria-label="Main"
                     :aria-hidden="!isMenuOpen"
                     class="aria-[hidden='true']:hidden absolute inset-0 p-6 m-2 rounded-lg bg-white shadow-lg"
                 >
-
-                    <ul class="list-none  left-0  w-full bg-purple-50 space-y-4 mt-20">
+                    <ul class="list-none left-0 w-full space-y-4 mt-20">
                         <li
                             v-for="item in menu"
                             :key="item.label"
@@ -73,10 +133,7 @@ const menu: MenuProps[] = [
                             </a>
                         </li>
                     </ul>
-
                 </nav>
-
-
             </header>
 
             <main
@@ -121,10 +178,7 @@ const menu: MenuProps[] = [
 
             </main>
 
-
         </div>
-
-
 
         <footer
             id="footer"
