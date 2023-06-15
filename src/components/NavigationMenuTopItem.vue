@@ -89,6 +89,7 @@ const manageKeyboardAccessOnItem = (event: KeyboardEvent) => {
                 ref="chevronButtonRef"
             >
                 <svg
+                    role="presentation"
                     class="h-5 w-5 "
                     :class="{ 'rotate-180': isOpenRef }"
                     fill="none"
