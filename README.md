@@ -5,3 +5,4 @@
 - Navigation
 - Hamburger Menu 
 - Teaser
+- Accordion
