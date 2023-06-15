@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage.vue";
 import SkipLinkPage from "./pages/SkipLinkPage.vue";
 import NavigationPage from "./pages/NavigationPage.vue";
 import HambugerMenuPage from "./pages/HambugerMenuPage.vue";
+import TeaserPage from "./pages/TeaserPage.vue";
 
 const routes: RouteRecordRaw[] = [
   { path: "", name: "pages.home", component: HomePage },
@@ -23,6 +24,12 @@ const routes: RouteRecordRaw[] = [
     name: "pages.hambuger-menu",
     component: HambugerMenuPage,
     meta: { label: "Hambuger Menu" },
+  },
+  {
+    path: "/teaser",
+    name: "pages.teaser",
+    component: TeaserPage,
+    meta: { label: "Teaser" },
   },
 ];
 

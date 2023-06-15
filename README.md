@@ -3,4 +3,5 @@
 ## Components
 - Skip Link
 - Navigation
-- Hamburger Menu
+- Hamburger Menu 
+- Teaser
