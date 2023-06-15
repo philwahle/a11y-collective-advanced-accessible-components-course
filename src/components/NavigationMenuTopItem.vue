@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, VNodeRef } from 'vue';
-
+import { ref } from 'vue';
 
 interface NavItemProps {
     to?: string
@@ -22,10 +21,16 @@ const { isDefaultOpen, submenu, to, label } = withDefaults(defineProps<Props>(),
 const isOpenRef = ref<boolean>(isDefaultOpen);
 const hasChildren = ref<boolean>(!!submenu?.length);
 const chevronButtonRef = ref<HTMLButtonElement>();
+const listItemRef = ref<HTMLUListElement[]>([]);
 
 const ariaLabel = `Toggle ${label} submenu`;
 
 const manageKeyboardAccessOnItem = (event: KeyboardEvent) => {
+
+    if (!hasChildren.value) {
+        return;
+    }
+
     // Leave submenu when pressing escape
     if (event.key === 'Escape') {
         isOpenRef.value = false;
@@ -35,11 +40,23 @@ const manageKeyboardAccessOnItem = (event: KeyboardEvent) => {
     }
 
     if (event.key === 'Tab') {
+        const focusedElement = event.target as HTMLElement;
+        const firstfirstFocusableElement = listItemRef.value[0].querySelector('a') as HTMLElement;
+        const lastFocusableElement = listItemRef.value[listItemRef.value.length - 1].querySelector('a') as HTMLElement;
+
         // Leave submenu at the last link
-        // todo
+        if (focusedElement === lastFocusableElement && !event.shiftKey) {
+            isOpenRef.value = false;
+
+            return;
+        }
 
         // Leave submenu at the first link
-        // todo
+        if (focusedElement === firstfirstFocusableElement && event.shiftKey) {
+            isOpenRef.value = false;
+
+            return;
+        }
     }
 }
 
@@ -59,8 +76,6 @@ const manageKeyboardAccessOnItem = (event: KeyboardEvent) => {
             :class="{
                 'px-3.5': !hasChildren,
                 'pl-3.5 pr-2': hasChildren,
-
-
             }"
         >
             {{ label }}
@@ -99,16 +114,16 @@ const manageKeyboardAccessOnItem = (event: KeyboardEvent) => {
                     v-for="item in submenu"
                     :key="item.label"
                     class="w-36"
+                    ref="listItemRef"
                 >
                     <a
                         :href="item.to ?? '#'"
-                        class="no-underline hover:underline px-3.5 py-2 inline-block w-full"
+                        class="no-underline hover:underline px-3.5 py-2 inline-block w-full hover:bg-gray-100"
                     >
                         {{ item.label }} <span class="sr-only"> {{ label }}</span>
                     </a>
                 </li>
             </ul>
-
         </template>
 
     </li>
