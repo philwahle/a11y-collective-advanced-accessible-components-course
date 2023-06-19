@@ -6,3 +6,4 @@
 - Hamburger Menu 
 - Teaser
 - Accordion
+- Tablist
