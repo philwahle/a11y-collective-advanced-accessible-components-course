@@ -8,3 +8,4 @@
 - Accordion
 - Tablist
 - Slider
+- Dialog

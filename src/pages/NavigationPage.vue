@@ -71,5 +71,5 @@ const contactSubmenuItems = [
         >
             <link-wrapper />
         </footer>
-
-</div></template>
+    </div>
+</template>

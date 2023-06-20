@@ -7,6 +7,7 @@ import TeaserPage from "./pages/TeaserPage.vue";
 import AccordionPage from "./pages/AccordionPage.vue";
 import TablistPage from "./pages/TablistPage.vue";
 import SliderPage from "./pages/SliderPage.vue";
+import DialogPage from "./pages/DialogPage.vue";
 
 const routes: RouteRecordRaw[] = [
   { path: "", name: "pages.home", component: HomePage },
@@ -51,6 +52,12 @@ const routes: RouteRecordRaw[] = [
     name: "pages.slider",
     component: SliderPage,
     meta: { label: "Slider" },
+  },
+  {
+    path: "/dialog",
+    name: "pages.dialog",
+    component: DialogPage,
+    meta: { label: "Dialog" },
   },
 ];
 
