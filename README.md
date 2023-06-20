@@ -7,3 +7,4 @@
 - Teaser
 - Accordion
 - Tablist
+- Slider

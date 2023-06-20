@@ -22,9 +22,6 @@ const navigate = (event: KeyboardEvent) => {
             tablist.setActiveTab(tablist.itemsCountRef.value);
         }
     }
-
-
-
 }
 </script>
 

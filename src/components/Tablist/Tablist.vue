@@ -1,7 +1,5 @@
 <script setup lang="ts">
-
 import { onMounted, provide, ref } from 'vue';
-
 
 const activeTabRef = ref(0);
 const itemsCountRef = ref(0);
@@ -16,11 +14,9 @@ provide('tablist', {
         console.log(tab);
     },
 });
-
 onMounted(() => {
     activeTabRef.value = 1;
 });
-
 
 </script>
 
