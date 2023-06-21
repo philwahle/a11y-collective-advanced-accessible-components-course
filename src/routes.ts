@@ -8,6 +8,7 @@ import AccordionPage from "./pages/AccordionPage.vue";
 import TablistPage from "./pages/TablistPage.vue";
 import SliderPage from "./pages/SliderPage.vue";
 import DialogPage from "./pages/DialogPage.vue";
+import FormPage from "./pages/FormPage.vue";
 
 const routes: RouteRecordRaw[] = [
   { path: "", name: "pages.home", component: HomePage },
@@ -58,6 +59,12 @@ const routes: RouteRecordRaw[] = [
     name: "pages.dialog",
     component: DialogPage,
     meta: { label: "Dialog" },
+  },
+  {
+    path: "/form",
+    name: "pages.form",
+    component: FormPage,
+    meta: { label: "Form" },
   },
 ];
 
